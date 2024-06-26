@@ -15,8 +15,8 @@ tokenizer, model = load_model_and_tokenizer()
 def predict(input_text):
     input_data = [f"Consider this post: {input_text}. Question: Does the poster suffer from depression?"]
     inputs = tokenizer(input_data, return_tensors="pt", padding=True)
-    input_ids = inputs.input_ids.to('cuda')
-    generate_ids = model.generate(input_ids=input_ids, max_length=512)
+    input_ids = inputs.input_ids
+    generate_ids = model.generate(input_ids, max_length=512)
     trunc_ids = generate_ids[0][len(input_ids[0]):]
     response = tokenizer.decode(trunc_ids, skip_special_tokens=True, spaces_between_special_tokens=False)
     return response
